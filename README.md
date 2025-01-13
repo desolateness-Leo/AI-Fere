@@ -1,10 +1,45 @@
 # AI-Fere
 作用于B端的提供伴侣回复的AI架构，当前调用为GPT的接口实现。
 
-pkg	可以被外部项目依赖
-internal	本项目的私有代码，不可以被外部项目依赖，编译时会校验
-api	对外接口定的义，比如 http request / response struct 或者 grpc 的 proto 文件
-cmd	项目入口函数所在目录，如果有多个入口，通过子目录区分 比如 /api/books/main.go
-docs	项目文档所在路径
-test	存放一些公共的测试工具方法和依赖，工具分为 e2e 或者 其他集成测试，也包含启动特定测试的脚本
-conf	存放一些默认配置，只包含配置文件
+
+# 项目结构
+/myapp
+├── /cmd              # 启动程序
+│   └── /server.go    # 启动文件
+├── /config           # 配置文件
+├── /internal         # 内部业务代码
+│   ├── /handler      # 路由处理层
+│   ├── /service      # 业务逻辑层
+│   ├── /repository   # 数据库访问层
+│   ├── /model        # 数据模型层
+│   └── /middleware   # 中间件
+├── /pkg              # 公共库
+├── /scripts          # 脚本（如数据库迁移）
+├── /deploy           # 部署相关文件
+└── go.mod            # Go Module 配置
+
+1. 安装go及其相关依赖依赖
+   1. go安装网上有
+   2. go依赖
+      go get 
+      依赖：
+2. 关键设计原则
+   1. 使用 Goroutines 和 Channels
+   2. 连接池（Connection Pool）
+   3. 负载均衡
+   4. 限流
+   5. 异步处理
+3. 架构设计
+   1. Web 框架：Gin
+   2. 消息队列：Kafka
+   3. 数据库：MySQL配合连接池管理
+   4. 缓存：Redis
+   5. 负载均衡器：Traefik
+   6. 服务发现和调度：Zookeeper
+   7. 服务容器化：docker
+4. 业务设计
+   1. 当前仅仅使用gpt api 实现封装。
+   2. prompt实验设置效果
+   3. prompt模板设计
+   4. 用户输入特征归纳提取。（后续项目）
+   5. prompt标签加入(后续项目)
